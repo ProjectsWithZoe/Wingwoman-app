@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSwipeable } from "react-swipeable";
 import {
   collection,
   query,
@@ -21,6 +22,39 @@ function Chat() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
+
+  const promptSuggestions = [
+    "How to improve my productivity?",
+    "Tips for a healthier lifestyle",
+    "How can I improve my relationships?",
+    "Career advice for software developers",
+    "Advice on mental health and wellness",
+    "What are some good habits to develop?",
+    "How to manage stress effectively?",
+    "What to do when feeling demotivated?",
+  ];
+
+  const nextPrompt = () => {
+    setCurrentPromptIndex((prev) => (prev + 1) % promptSuggestions.length);
+  };
+
+  const prevPrompt = () => {
+    setCurrentPromptIndex(
+      (prev) => (prev - 1 + promptSuggestions.length) % promptSuggestions.length
+    );
+  };
+
+  const handlePromptClick = (prompt) => {
+    setInput(prompt); // Fill the input with the selected prompt
+  };
+
+  const handlers = useSwipeable({
+    onSwipedLeft: nextPrompt,
+    onSwipedRight: prevPrompt,
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true, // Enables swipe detection on desktop
+  });
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
@@ -193,6 +227,45 @@ function Chat() {
           </div>
         </div>
       )}
+
+      {/* Chat Section */}
+      <div className="flex-1 flex flex-col">
+        {/* Carousel for Prompts */}
+        <div
+          {...handlers}
+          className="flex items-center justify-center space-x-4 p-4"
+        >
+          <button
+            onClick={prevPrompt}
+            className="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600"
+          >
+            <i className="fa-solid fa-chevron-left"></i>
+          </button>
+
+          <div className="flex items-center gap-4">
+            {promptSuggestions.map((prompt, index) => (
+              <button
+                key={index}
+                className={`p-2 rounded-lg ${
+                  currentPromptIndex === index
+                    ? "bg-primary-500 text-white"
+                    : "bg-gray-700 text-white"
+                }`}
+                onClick={() => handlePromptClick(prompt)}
+              >
+                {prompt}
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={nextPrompt}
+            className="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600"
+          >
+            <i className="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
 
       {/* Messages */}
       <div className="flex-1 overflow-auto p-4 space-y-4">

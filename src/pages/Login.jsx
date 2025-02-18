@@ -81,12 +81,29 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div
+      className="min-h-screen flex items-center justify-center p-4 "
+      style={{ fontFamily: '"Poppins", sans-serif', fontSize: "20px" }}
+    >
       <div className="md:w-[80%] max-w-md space-y-8">
         <div className="text-center">
-          <i className="fa-solid fa-robot fa-2x mx-auto h-12 w-12 text-primary-500"></i>
-          <h2 className="mt-6 text-3xl font-bold">Welcome to WingWoman</h2>
-          <p className="mt-2 text-gray-400">
+          <img
+            src="logo3.png"
+            className="mx-auto h-auto w-16 text-primary-500 text-center"
+          ></img>
+          <h2 className="mt-2 text-3xl font-bold">
+            Welcome to{" "}
+            <div
+              className="text-primary-500 mt-2"
+              style={{
+                fontFamily: '"Lavishly Yours", sans-serif',
+                fontSize: "52px",
+              }}
+            >
+              WingWoman
+            </div>
+          </h2>
+          <p className="mt-4 text-gray-400">
             Sign up to get sassy dating advice!
           </p>
         </div>

@@ -208,7 +208,10 @@ function Chat() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-900">
+    <div
+      style={{ fontFamily: '"Poppins", sans-serif', fontSize: "20px" }}
+      className="flex flex-col h-screen bg-gray-900"
+    >
       {/* Toggle Button (Only for Mobile) */}
 
       {/* Sidebar */}
@@ -219,8 +222,19 @@ function Chat() {
           <i className="fa-solid fa-bars"></i>
         </button>
         <div className="flex items-center gap-2">
-          <i className="fa-solid fa-robot text-4xl text-primary-500"></i>
-          <h1 className="text-xl font-bold">WingWoman</h1>
+          <img
+            src="logo3.png"
+            className="mx-auto h-auto w-16 text-primary-500 text-center"
+          ></img>
+          <h1
+            className="text-xl font-bold"
+            style={{
+              fontFamily: '"Lavishly Yours", sans-serif',
+              fontSize: "36px",
+            }}
+          >
+            WingWoman
+          </h1>
         </div>
         <Button variant="secondary" onClick={handleSignOut}>
           <i className="fa-solid fa-right-from-bracket"></i> Sign out

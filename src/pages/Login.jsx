@@ -88,7 +88,7 @@ export function Login() {
       <div className="md:w-[80%] max-w-md space-y-8">
         <div className="text-center">
           <img
-            src="../logo3.png"
+            src="logo3.png"
             className="mx-auto h-auto w-16 text-primary-500 text-center"
           ></img>
           <h2 className="mt-2 text-3xl font-bold">

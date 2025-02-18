@@ -54,7 +54,7 @@ function Chat() {
   const handlers = useSwipeable({
     onSwipedLeft: nextPrompt,
     onSwipedRight: prevPrompt,
-    preventDefaultTouchmoveEvent: true,
+    preventScrollOnSwipe: true,
     trackMouse: true, // Enables swipe detection on desktop
   });
 

@@ -28,7 +28,7 @@ const SwipeableCarousel = () => {
   };
 
   return (
-    <div style={{ overflow: "hidden", width: "100%", position: "relative" }}>
+    <div style={{ overflow: "hidden", width: "90%", position: "relative" }}>
       <div
         {...handlers}
         style={{
@@ -41,12 +41,12 @@ const SwipeableCarousel = () => {
           <div
             key={item.id}
             style={{
-              minWidth: "100%",
+              minWidth: "40%",
               boxSizing: "border-box",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "200px",
+              height: "80px",
               backgroundColor: "#f0f0f0",
               border: "1px solid #ccc",
               borderRadius: "8px",

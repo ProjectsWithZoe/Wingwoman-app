@@ -223,7 +223,7 @@ function Chat() {
         </button>
         <div className="flex items-center gap-2">
           <img
-            src="./logo3.png"
+            src=".assets/logo3.png"
             className="mx-auto h-auto w-16 text-primary-500 text-center"
           ></img>
           <h1

@@ -1,3 +1,5 @@
 node_modules
 
 *.env
+./api/server.js
+server.js

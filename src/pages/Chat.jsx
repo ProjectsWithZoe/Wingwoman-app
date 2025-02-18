@@ -24,16 +24,17 @@ function Chat() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
+  const [messageLimitReached, setMessageLimitReached] = useState(false); // State for message limit
 
   const promptSuggestions = [
-    "How to improve my productivity?",
-    "Tips for a healthier lifestyle",
-    "How can I improve my relationships?",
-    "Career advice for software developers",
-    "Advice on mental health and wellness",
-    "What are some good habits to develop?",
-    "How to manage stress effectively?",
-    "What to do when feeling demotivated?",
+    "Why are they ghosting me?",
+    "Tips to improve my dating profile",
+    "Why is he like this?",
+    "What should I do to apologize to her?",
+    "Is my situationship healthy or should I end it? ",
+    "How do i ask her to be my girlfriend?",
+    "How should I meet people without dating apps?",
+    "Why did she friendzone me?",
   ];
 
   const nextPrompt = () => {
@@ -102,14 +103,29 @@ function Chat() {
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      checkMessageLimit(snapshot.docs.length); // Check the message limit when messages are updated
     });
 
     return unsubscribe;
   }, [activeChat]);
 
+  // Check if message limit has been reached
+  const checkMessageLimit = (messageCount) => {
+    if (messageCount >= 10) {
+      setMessageLimitReached(true); // If 10 or more messages, show paywall
+    } else {
+      setMessageLimitReached(false); // Otherwise, allow more messages
+    }
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (!input.trim()) return;
+
+    if (messageLimitReached) {
+      alert("You've reached the message limit. Please upgrade to continue.");
+      return;
+    }
 
     setIsLoading(true);
 
@@ -289,37 +305,45 @@ function Chat() {
       </div>
 
       {/* Input Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="border-t border-gray-800 p-4 flex gap-4"
-      >
-        <button
-          type="button"
-          onClick={handleNewChat}
-          className="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600"
+      {messageLimitReached ? (
+        <div className="text-center p-4 bg-red-700 text-white">
+          <h2>
+            You have reached your message limit. Please upgrade to continue.
+          </h2>
+          {/* Add your paywall here */}
+          <Button variant="primary" onClick={() => alert("Go to payment page")}>
+            Upgrade Now
+          </Button>
+        </div>
+      ) : (
+        <form
+          onSubmit={handleSubmit}
+          className="border-t border-gray-800 p-4 flex gap-4"
         >
-          <i className="fa-solid fa-pen-to-square"></i>
-        </button>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="I need advice on..."
-          className="flex-1 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-primary-500"
-        />
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className="flex items-center gap-2"
-        >
-          {isLoading ? (
-            <i className="fa-solid fa-spinner animate-spin"></i>
-          ) : (
-            <i className="fa-solid fa-arrow-right"></i>
-          )}
-          Send
-        </Button>
-      </form>
+          <button>
+            <i className="fa-solid fa-lg fa-pen-to-square"></i>
+          </button>
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="I need advice on..."
+            className="flex-1 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-primary-500"
+          />
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="flex items-center gap-2"
+          >
+            {isLoading ? (
+              <i className="fa-solid fa-spinner animate-spin"></i>
+            ) : (
+              <i className="fa-solid fa-arrow-right"></i>
+            )}
+            Send
+          </Button>
+        </form>
+      )}
     </div>
   );
 }

@@ -45,7 +45,8 @@ function Chat() {
     );
   };
 
-  const handlePromptClick = (prompt) => {
+  const handlePromptClick = (prompt, index) => {
+    setCurrentPromptIndex(index);
     setInput(prompt); // Fill the input with the selected prompt
   };
 
@@ -251,7 +252,7 @@ function Chat() {
                     ? "bg-primary-500 text-white"
                     : "bg-gray-700 text-white"
                 }`}
-                onClick={() => handlePromptClick(prompt)}
+                onClick={() => handlePromptClick(prompt, index)}
               >
                 {prompt}
               </button>

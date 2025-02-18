@@ -268,7 +268,7 @@ function Chat() {
           {promptSuggestions.map((prompt, index) => (
             <button
               key={index}
-              className={`p-2 rounded-lg whitespace-nowrap ${
+              className={`p-2 rounded-lg whitespace ${
                 currentPromptIndex === index
                   ? "bg-primary-500 text-white"
                   : "bg-gray-700 text-white"

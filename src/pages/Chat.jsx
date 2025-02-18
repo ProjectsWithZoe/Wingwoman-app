@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
 import { Button } from "../components/Button";
+import SwipeableCarousel from "../components/SwipeableCarousel";
 
 function Chat() {
   const navigate = useNavigate();
@@ -228,6 +229,8 @@ function Chat() {
           </div>
         </div>
       )}
+
+      <SwipeableCarousel />
 
       {/* Chat Section */}
       <div className="flex-1 flex flex-col">

@@ -103,12 +103,27 @@ function Chat() {
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      checkMessageLimit(snapshot.docs.length); // Check the message limit when messages are updated
-      console.log(snapshot.docs.length);
     });
 
     return unsubscribe;
   }, [activeChat]);
+
+  useEffect(() => {
+    if (!auth.currentUser) return;
+
+    const q = query(
+      collection(db, "messages"),
+      where("userId", "==", auth.currentUser.uid) // Get all messages sent by the user
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const userMessages = snapshot.docs.length;
+      checkMessageLimit(userMessages); // Check the message limit when messages are updated
+      console.log(userMessages);
+    });
+
+    return unsubscribe;
+  }, [auth.currentUser]); // Runs whenever the user state changes
 
   // Check if message limit has been reached
   const checkMessageLimit = (messageCount) => {

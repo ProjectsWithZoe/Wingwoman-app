@@ -230,47 +230,6 @@ function Chat() {
         </div>
       )}
 
-      <SwipeableCarousel />
-
-      {/* Chat Section */}
-      <div className="flex-1 flex flex-col">
-        {/* Carousel for Prompts */}
-        <div
-          {...handlers}
-          className="flex items-center justify-center space-x-4 p-4"
-        >
-          <button
-            onClick={prevPrompt}
-            className="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600"
-          >
-            <i className="fa-solid fa-chevron-left"></i>
-          </button>
-
-          <div className="flex items-center gap-4">
-            {promptSuggestions.map((prompt, index) => (
-              <button
-                key={index}
-                className={`p-2 rounded-lg ${
-                  currentPromptIndex === index
-                    ? "bg-primary-500 text-white"
-                    : "bg-gray-700 text-white"
-                }`}
-                onClick={() => handlePromptClick(prompt, index)}
-              >
-                {prompt}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={nextPrompt}
-            className="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600"
-          >
-            <i className="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
-
       {/* Messages */}
       <div className="flex-1 overflow-auto p-4 space-y-4">
         {messages.map((msg) => (
@@ -291,6 +250,42 @@ function Chat() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Carousel for Prompts */}
+      <div
+        {...handlers}
+        className="flex items-center justify-center space-x-4 p-4 bg-gray-800"
+      >
+        <button
+          onClick={prevPrompt}
+          className="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600"
+        >
+          <i className="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div className="flex items-center gap-4 overflow-x-auto">
+          {promptSuggestions.map((prompt, index) => (
+            <button
+              key={index}
+              className={`p-2 rounded-lg whitespace-nowrap ${
+                currentPromptIndex === index
+                  ? "bg-primary-500 text-white"
+                  : "bg-gray-700 text-white"
+              }`}
+              onClick={() => handlePromptClick(prompt, index)}
+            >
+              {prompt}
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={nextPrompt}
+          className="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600"
+        >
+          <i className="fa-solid fa-chevron-right"></i>
+        </button>
       </div>
 
       {/* Input Form */}

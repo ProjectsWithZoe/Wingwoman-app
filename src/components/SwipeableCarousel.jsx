@@ -39,6 +39,7 @@ const SwipeableCarousel = () => {
       >
         {carouselItems.map((item) => (
           <div
+            className="bg-gray-700"
             key={item.id}
             style={{
               minWidth: "40%",
@@ -47,7 +48,6 @@ const SwipeableCarousel = () => {
               justifyContent: "center",
               alignItems: "center",
               height: "80px",
-              backgroundColor: "#f0f0f0",
               border: "1px solid #ccc",
               borderRadius: "8px",
               fontSize: "24px",

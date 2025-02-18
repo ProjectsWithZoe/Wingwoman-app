@@ -104,6 +104,7 @@ function Chat() {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
       checkMessageLimit(snapshot.docs.length); // Check the message limit when messages are updated
+      console.log(snapshot.docs.length);
     });
 
     return unsubscribe;

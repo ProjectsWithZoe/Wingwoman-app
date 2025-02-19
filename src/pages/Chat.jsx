@@ -13,6 +13,7 @@ import {
 import { auth, db } from "../lib/firebase";
 import { Button } from "../components/Button";
 import SwipeableCarousel from "../components/SwipeableCarousel";
+import { ProductDisplay, SuccessDisplay } from "../components/StripeDisplay";
 
 function Chat() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ function Chat() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const [messageLimitReached, setMessageLimitReached] = useState(false); // State for message limit
+  const [isSubscribed, setIsSubscribed] = useState(false); // Track subscription status
 
   const promptSuggestions = [
     "Why are they ghosting me?",
@@ -36,6 +38,11 @@ function Chat() {
     "How should I meet people without dating apps?",
     "Why did she friendzone me?",
   ];
+
+  // State handling for Stripe subscription and other UI
+  const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [sessionId, setSessionId] = useState("");
 
   const nextPrompt = () => {
     setCurrentPromptIndex((prev) => (prev + 1) % promptSuggestions.length);
@@ -207,6 +214,28 @@ function Chat() {
     setActiveChat(newChatRef.id); // Set the newly created chat as the active one
   };
 
+  // Stripe Subscription Handling
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+
+    if (query.get("success")) {
+      setSuccess(true);
+      setSessionId(query.get("session_id"));
+      setIsSubscribed(true); // Mark as subscribed
+    }
+
+    if (query.get("canceled")) {
+      setSuccess(false);
+      setMessage(
+        "Order canceled -- continue to shop around and checkout when you're ready."
+      );
+    }
+  }, [sessionId]);
+
+  const handleNavToStripe = () => {
+    navigate("/stripe-pricing");
+  };
+
   return (
     <div
       //style={{ fontFamily: '"Poppins", sans-serif', fontSize: "20px" }}
@@ -340,8 +369,8 @@ function Chat() {
           <h2>
             You have reached your message limit. Please upgrade to continue.
           </h2>
-          {/* Add your paywall here */}
-          <Button variant="primary" onClick={() => alert("Go to payment page")}>
+          {/*<ProductDisplay />*/}
+          <Button variant="primary" onClick={() => handleNavToStripe()}>
             Upgrade Now
           </Button>
         </div>
@@ -374,6 +403,8 @@ function Chat() {
           </Button>
         </form>
       )}
+      {/* Stripe Success Screen */}
+      {success && sessionId && <SuccessDisplay sessionId={sessionId} />}
     </div>
   );
 }

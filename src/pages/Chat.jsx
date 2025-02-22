@@ -127,15 +127,6 @@ function Chat() {
     return unsubscribe;
   }, [auth.currentUser]); // Runs whenever the user state changes
 
-  // Check if message limit has been reached
-  const checkMessageLimit = (messageCount) => {
-    if (messageCount >= 10) {
-      setMessageLimitReached(true); // If 10 or more messages, show paywall
-    } else {
-      setMessageLimitReached(false); // Otherwise, allow more messages
-    }
-  };
-
   async function handleSubmit(e) {
     e.preventDefault();
     if (!input.trim()) return;

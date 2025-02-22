@@ -1,5 +1,8 @@
-import express from "express";
-import cors from "cors";
+// This is your test secret API key.
+const stripe = require("stripe")(
+  "sk_test_51QtyDZ08vAeOCZCFKF3CcDBLvhfj4RjISdI8oq0s9EZGpUurwXo9CAJif1XyC4F8g3jApCcqT9gMC5ycbitEiq3o00e6wxtiep"
+);
+const express = require("express");
 const app = express();
 import OpenAI from "openai";
 import dotenv from "dotenv";

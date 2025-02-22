@@ -106,7 +106,6 @@ function Chat() {
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      checkMessageLimit(snapshot.docs.length); // Check the message limit when messages are updated
     });
 
     return unsubscribe;
@@ -218,8 +217,33 @@ function Chat() {
     setActiveChat(newChatRef.id); // Set the newly created chat as the active one
   };
 
+  // Stripe Subscription Handling
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+
+    if (query.get("success")) {
+      setSuccess(true);
+      setSessionId(query.get("session_id"));
+      setIsSubscribed(true); // Mark as subscribed
+    }
+
+    if (query.get("canceled")) {
+      setSuccess(false);
+      setMessage(
+        "Order canceled -- continue to shop around and checkout when you're ready."
+      );
+    }
+  }, [sessionId]);
+
+  const handleNavToStripe = () => {
+    navigate("/stripe-pricing");
+  };
+
   return (
-    <div className="flex flex-col h-screen bg-gray-900">
+    <div
+      //style={{ fontFamily: '"Poppins", sans-serif', fontSize: "20px" }}
+      className="flex flex-col h-screen bg-gray-900"
+    >
       {/* Toggle Button (Only for Mobile) */}
 
       {/* Sidebar */}
@@ -230,11 +254,22 @@ function Chat() {
           <i className="fa-solid fa-bars"></i>
         </button>
         <div className="flex items-center gap-2">
-          <i className="fa-solid fa-robot text-4xl text-primary-500"></i>
-          <h1 className="text-xl font-bold">WingWoman</h1>
+          <img
+            src="/images/logo3.png"
+            className="mx-auto h-auto w-16 text-primary-500 text-center"
+          ></img>
+          <h1
+            className="text-xl font-bold"
+            /*style={{
+              fontFamily: '"Lavishly Yours", sans-serif',
+              fontSize: "36px",
+            }}*/
+          >
+            WingWoman
+          </h1>
         </div>
         <Button variant="secondary" onClick={handleSignOut}>
-          <i className="fa-solid fa-right-from-bracket"></i> Sign out
+          <i className="fa-solid fa-right-from-bracket"></i>
         </Button>
       </header>
       {/* Sidebar */}
@@ -356,6 +391,8 @@ function Chat() {
           </Button>
         </form>
       )}
+      {/* Stripe Success Screen */}
+      {success && sessionId && <SuccessDisplay sessionId={sessionId} />}
     </div>
   );
 }

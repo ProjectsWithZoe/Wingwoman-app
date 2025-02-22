@@ -139,7 +139,7 @@ function Chat() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/advice", {
+      const response = await fetch("/api/advice", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input }),
@@ -209,7 +209,7 @@ function Chat() {
   };
 
   // Stripe Subscription Handling
-  useEffect(() => {
+  /*useEffect(() => {
     const query = new URLSearchParams(window.location.search);
 
     if (query.get("success")) {
@@ -224,7 +224,7 @@ function Chat() {
         "Order canceled -- continue to shop around and checkout when you're ready."
       );
     }
-  }, [sessionId]);
+  }, [sessionId]);*/
 
   const handleNavToStripe = () => {
     navigate("/stripe-pricing");

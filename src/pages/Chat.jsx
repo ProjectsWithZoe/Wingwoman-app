@@ -25,7 +25,9 @@ function Chat() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const [messageLimitReached, setMessageLimitReached] = useState(false); // State for message limit
+
   const [hasAccess, setHasAccess] = useState(false);
+
 
   const promptSuggestions = [
     "Why are they ghosting me?",
@@ -41,6 +43,7 @@ function Chat() {
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
     console.log("clicked");
+
   };
 
   useEffect(() => {
@@ -106,7 +109,6 @@ function Chat() {
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      checkMessageLimit(snapshot.docs.length); // Check the message limit when messages are updated
     });
 
     return unsubscribe;
@@ -123,19 +125,11 @@ function Chat() {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const userMessages = snapshot.docs.length;
       setMessageLimitReached(userMessages >= 10); // Check if limit reached
+
     });
 
     return unsubscribe;
   }, [auth.currentUser]); // Runs whenever the user state changes
-
-  // Check if message limit has been reached
-  const checkMessageLimit = (messageCount) => {
-    if (messageCount >= 10) {
-      setMessageLimitReached(true); // If 10 or more messages, show paywall
-    } else {
-      setMessageLimitReached(false); // Otherwise, allow more messages
-    }
-  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -218,8 +212,33 @@ function Chat() {
     setActiveChat(newChatRef.id); // Set the newly created chat as the active one
   };
 
+  // Stripe Subscription Handling
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+
+    if (query.get("success")) {
+      setSuccess(true);
+      setSessionId(query.get("session_id"));
+      setIsSubscribed(true); // Mark as subscribed
+    }
+
+    if (query.get("canceled")) {
+      setSuccess(false);
+      setMessage(
+        "Order canceled -- continue to shop around and checkout when you're ready."
+      );
+    }
+  }, [sessionId]);
+
+  const handleNavToStripe = () => {
+    navigate("/stripe-pricing");
+  };
+
   return (
-    <div className="flex flex-col h-screen bg-gray-900">
+    <div
+      //style={{ fontFamily: '"Poppins", sans-serif', fontSize: "20px" }}
+      className="flex flex-col h-screen bg-gray-900"
+    >
       {/* Toggle Button (Only for Mobile) */}
 
       {/* Sidebar */}
@@ -230,11 +249,22 @@ function Chat() {
           <i className="fa-solid fa-bars"></i>
         </button>
         <div className="flex items-center gap-2">
-          <i className="fa-solid fa-robot text-4xl text-primary-500"></i>
-          <h1 className="text-xl font-bold">WingWoman</h1>
+          <img
+            src="/images/logo3.png"
+            className="mx-auto h-auto w-16 text-primary-500 text-center"
+          ></img>
+          <h1
+            className="text-xl font-bold"
+            /*style={{
+              fontFamily: '"Lavishly Yours", sans-serif',
+              fontSize: "36px",
+            }}*/
+          >
+            WingWoman
+          </h1>
         </div>
         <Button variant="secondary" onClick={handleSignOut}>
-          <i className="fa-solid fa-right-from-bracket"></i> Sign out
+          <i className="fa-solid fa-right-from-bracket"></i>
         </Button>
       </header>
       {/* Sidebar */}
@@ -322,7 +352,7 @@ function Chat() {
           <h2>
             You have reached your message limit. Please upgrade to continue.
           </h2>
-          {/* Add your paywall here */}
+
           <Button variant="primary" onClick={handlePT}>
             Upgrade Now
           </Button>
@@ -356,6 +386,8 @@ function Chat() {
           </Button>
         </form>
       )}
+      {/* Stripe Success Screen */}
+      {success && sessionId && <SuccessDisplay sessionId={sessionId} />}
     </div>
   );
 }

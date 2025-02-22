@@ -1,6 +1,12 @@
 node_modules
 
 *.env
+
 src/lib/serviceAccountKey.json
 src/lib/serviceAccountKey-min.json
 route.js
+
+
+server.js
+.vercel
+

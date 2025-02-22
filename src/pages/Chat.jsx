@@ -383,7 +383,7 @@ function Chat() {
         </form>
       )}
       {/* Stripe Success Screen */}
-      {success && sessionId && <SuccessDisplay sessionId={sessionId} />}
+      {/*success && sessionId && <SuccessDisplay sessionId={sessionId} />*/}
     </div>
   );
 }

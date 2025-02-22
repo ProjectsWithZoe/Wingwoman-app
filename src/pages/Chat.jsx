@@ -382,8 +382,6 @@ function Chat() {
           </Button>
         </form>
       )}
-      {/* Stripe Success Screen */}
-      {/*success && sessionId && <SuccessDisplay sessionId={sessionId} />*/}
     </div>
   );
 }

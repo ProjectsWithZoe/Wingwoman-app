@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Subscribe to a cool new product</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <section>
+      <!-- Starter Plan -->
+      <div class="product">
+        <div class="description">
+          <h3>Tier 1 Plan</h3>
+          <h5>$4.99 / month</h5>
+        </div>
+        <form
+          action="http://localhost:5000/create-checkout-session"
+          method="POST"
+        >
+          <input type="hidden" name="lookup_key" value="tier1_price" />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <!-- Pro Plan -->
+      <div class="product">
+        <div class="description">
+          <h3>Tier 2 Plan</h3>
+          <h5>$8.99 / month</h5>
+        </div>
+        <form
+          action="http://localhost:5000/create-checkout-session"
+          method="POST"
+        >
+          <input type="hidden" name="lookup_key" value="tier2_price" />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <!-- Enterprise Plan -->
+    </section>
+  </body>
+</html>

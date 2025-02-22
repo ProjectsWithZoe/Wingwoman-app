@@ -10,6 +10,8 @@ import {
 
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 export function Login() {
   const navigate = useNavigate();
@@ -18,10 +20,10 @@ export function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const firebaseAuth = getAuth(); // Correctly initialize auth
+  const auth = getAuth(); // Correctly initialize auth
 
   useEffect(() => {
-    const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user && user.emailVerified) {
         navigate("/chat");
       }
@@ -37,7 +39,7 @@ export function Login() {
 
     try {
       const userCredential = await signInWithEmailAndPassword(
-        firebaseAuth,
+        auth,
         email,
         password
       );
@@ -64,7 +66,7 @@ export function Login() {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
-        firebaseAuth,
+        auth,
         email,
         password
       );
@@ -72,8 +74,12 @@ export function Login() {
 
       await sendEmailVerification(user);
       setSuccess(true);
-
       setIsLoading(false);
+      await addDoc(collection(db, "users"), {
+        userId: auth.currentUser.uid,
+        email: user.email,
+        hasAccess: false,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
       setIsLoading(false);

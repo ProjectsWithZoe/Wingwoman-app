@@ -1,15 +1,14 @@
 import express from "express";
 import cors from "cors";
 const app = express();
-
 import OpenAI from "openai";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 // Middleware
-app.use(cors()); // Allow frontend requests
-app.use(express.json()); // Parse incoming JSON requests
+app.use(cors()); // Allow frontend reqs
+app.use(express.json()); // Parse incoming JSON reqs
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -21,12 +20,12 @@ app.post("/api/advice", async (req, res) => {
 
     if (!input) {
       return res.status(400).json({
-        error: "Please enter what you would you like advice on.",
+        error: "Please enter what you would you like advice on thaaaannks.",
       });
     }
 
     try {
-      const response = await openai.chat.completions.create({
+      const results = await openai.chat.completions.create({
         model: "gpt-4",
         messages: [
           {
@@ -39,13 +38,18 @@ app.post("/api/advice", async (req, res) => {
         max_tokens: 200,
       });
 
-      const gptResponse = response.choices[0].message.content;
-      res.json({ result: gptResponse });
+      const gptres = results.choices[0].message.content;
+      res.json({ result: gptres });
     } catch (error) {
-      console.error("Error extracting job skills:", error);
-      res.status(500).json({ error: "Failed to extract job skills." });
+      console.error(
+        "Error communicating with Wingwoman. Please try again",
+        error
+      );
+      res.status(500).json({ error: "Failed to reach Wingwoman." });
     }
   } else {
     res.status(405).json({ error: "Method Not Allowed" });
   }
 });
+
+app.listen(5000, () => console.log("Server running on port 5000"));

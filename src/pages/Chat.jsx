@@ -353,7 +353,7 @@ function Chat() {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="border-t border-gray-800 py-2 flex gap-2"
+          className="border-t border-gray-800 py-2 justify-between flex gap-2"
           style={{ minHeight: "60px" }}
         >
           <button className="flex-shrink-0">

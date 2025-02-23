@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth, db } from "../lib/firebase";
+import { auth } from "../lib/firebase";
 
 export const plans = [
   {
@@ -97,7 +97,7 @@ const styles = {
     fontFamily: "Montserrat, Arial, sans-serif",
     backgroundColor: "#1f2937",
     padding: "20px",
-    backgroundColor: "rgb(17,24,39)",
+    //backgroundColor: "rgb(17,24,39)",
   },
   pricingTable: {
     display: "flex",
@@ -106,7 +106,6 @@ const styles = {
     gap: "30px",
     backgroundColor: "#1f2937",
     borderRadius: "10px",
-    padding: "20px",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     width: "100%",
     maxWidth: "900px",

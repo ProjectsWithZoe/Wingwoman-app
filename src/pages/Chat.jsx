@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSwipeable } from "react-swipeable";
 
 import {
   collection,
@@ -204,7 +203,7 @@ function Chat() {
     // Clear the input and set activeChat to null
     setInput("");
     setActiveChat(null);
-    // Optionally, you can also create a new conversation here
+    // create a new conversation here
     const newChatRef = await addDoc(collection(db, "conversations"), {
       userId: auth.currentUser.uid,
       created_at: serverTimestamp(),
@@ -235,14 +234,7 @@ function Chat() {
   };*/
 
   return (
-    <div
-      //style={{ fontFamily: '"Poppins", sans-serif', fontSize: "20px" }}
-      className="flex flex-col h-screen bg-gray-900"
-    >
-      {/* Toggle Button (Only for Mobile) */}
-
-      {/* Sidebar */}
-
+    <div className="flex flex-col h-[100dvh] bg-gray-900 overflow-hidden">
       {/* Chat Section */}
       <header className="flex items-center justify-between p-4 border-b border-gray-800 text-white">
         <button onClick={toggleDropdown}>
@@ -360,9 +352,10 @@ function Chat() {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="border-t border-gray-800 p-4 flex gap-4"
+          className="border-t border-gray-800 py-2 justify-between flex gap-2"
+          style={{ minHeight: "60px" }}
         >
-          <button>
+          <button className="flex-shrink-0" onClick={handleNewChat}>
             <i className="fa-solid fa-lg fa-pen-to-square"></i>
           </button>
           <input
@@ -370,7 +363,7 @@ function Chat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="I need advice on..."
-            className="flex-1 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-primary-500"
+            className="w-[230px] md:w-[300px] px-2 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-primary-500"
           />
           <Button
             type="submit"

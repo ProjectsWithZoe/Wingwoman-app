@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
+
 import {
   collection,
   query,
@@ -12,8 +13,6 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
 import { Button } from "../components/Button";
-import SwipeableCarousel from "../components/SwipeableCarousel";
-import { ProductDisplay, SuccessDisplay } from "../components/StripeDisplay";
 
 function Chat() {
   const navigate = useNavigate();
@@ -26,7 +25,8 @@ function Chat() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const [messageLimitReached, setMessageLimitReached] = useState(false); // State for message limit
-  const [isSubscribed, setIsSubscribed] = useState(false); // Track subscription status
+  const [hasAccess, setHasAccess] = useState(false);
+  //const [success, setSuccess] = useState(false);
 
   const promptSuggestions = [
     "Why are they ghosting me?",
@@ -39,37 +39,33 @@ function Chat() {
     "Why did she friendzone me?",
   ];
 
-  // State handling for Stripe subscription and other UI
-  const [message, setMessage] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [sessionId, setSessionId] = useState("");
-
-  const nextPrompt = () => {
-    setCurrentPromptIndex((prev) => (prev + 1) % promptSuggestions.length);
-  };
-
-  const prevPrompt = () => {
-    setCurrentPromptIndex(
-      (prev) => (prev - 1 + promptSuggestions.length) % promptSuggestions.length
-    );
-  };
-
-  const handlePromptClick = (prompt, index) => {
-    setCurrentPromptIndex(index);
-    setInput(prompt); // Fill the input with the selected prompt
-  };
-
-  const handlers = useSwipeable({
-    onSwipedLeft: nextPrompt,
-    onSwipedRight: prevPrompt,
-    preventScrollOnSwipe: true,
-    trackMouse: true, // Enables swipe detection on desktop
-  });
-
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
     console.log("clicked");
   };
+
+  useEffect(() => {
+    if (!auth.currentUser) return;
+
+    const userRef = collection(db, "users");
+    const q = query(userRef, where("email", "==", auth.currentUser.email));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.exists()) {
+          setHasAccess(doc.data().hasAccess);
+        }
+      });
+    });
+
+    return unsubscribe;
+  }, [auth.currentUser]);
+
+  useEffect(() => {
+    if (hasAccess) {
+      navigate("/chat");
+    }
+  }, [hasAccess]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -83,6 +79,7 @@ function Chat() {
 
   useEffect(() => {
     if (!isAuthenticated || !auth.currentUser) return;
+    console.log(auth.currentUser.email);
 
     const q = query(
       collection(db, "conversations"),
@@ -125,27 +122,17 @@ function Chat() {
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const userMessages = snapshot.docs.length;
-      checkMessageLimit(userMessages); // Check the message limit when messages are updated
-      console.log(userMessages);
+      setMessageLimitReached(userMessages >= 10); // Check if limit reached
     });
 
     return unsubscribe;
   }, [auth.currentUser]); // Runs whenever the user state changes
 
-  // Check if message limit has been reached
-  const checkMessageLimit = (messageCount) => {
-    if (messageCount >= 10) {
-      setMessageLimitReached(true); // If 10 or more messages, show paywall
-    } else {
-      setMessageLimitReached(false); // Otherwise, allow more messages
-    }
-  };
-
   async function handleSubmit(e) {
     e.preventDefault();
     if (!input.trim()) return;
 
-    if (messageLimitReached) {
+    if (messageLimitReached && !hasAccess) {
       alert("You've reached the message limit. Please upgrade to continue.");
       return;
     }
@@ -153,7 +140,7 @@ function Chat() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/advice", {
+      const response = await fetch("http://localhost:5000/api/advice", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input }),
@@ -201,6 +188,14 @@ function Chat() {
     navigate("/");
   };
 
+  /*const openNewPage = () => {
+    window.open("stripe/checkout.html", "_blank");
+  };*/
+
+  const handlePT = () => {
+    navigate("/pt");
+  };
+
   // Handle creating a new chat when the pencil button is clicked
   const handleNewChat = async () => {
     // Clear the input and set activeChat to null
@@ -215,7 +210,7 @@ function Chat() {
   };
 
   // Stripe Subscription Handling
-  useEffect(() => {
+  /*useEffect(() => {
     const query = new URLSearchParams(window.location.search);
 
     if (query.get("success")) {
@@ -234,7 +229,7 @@ function Chat() {
 
   const handleNavToStripe = () => {
     navigate("/stripe-pricing");
-  };
+  };*/
 
   return (
     <div
@@ -328,49 +323,34 @@ function Chat() {
       </div>
 
       {/* Carousel for Prompts */}
-      <div
-        {...handlers}
-        className="flex items-center justify-center space-x-4 p-4 bg-gray-800"
-      >
-        <button
-          onClick={prevPrompt}
-          className="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600"
-        >
-          <i className="fa-solid fa-chevron-left"></i>
-        </button>
-
-        <div className="flex items-center gap-4 overflow-x-auto">
+      <div className="flex items-center justify-center space-x-4 p-4 bg-gray-800">
+        <div className="carousel h-[100px]">
           {promptSuggestions.map((prompt, index) => (
             <button
               key={index}
-              className={`p-2 rounded-lg whitespace ${
-                currentPromptIndex === index
-                  ? "bg-primary-500 text-white"
-                  : "bg-gray-700 text-white"
-              }`}
+              className={`p-3 w-[120px] rounded-lg text-xs transition-all 
+    ${
+      currentPromptIndex === index
+        ? "bg-primary-500 text-white"
+        : "bg-gray-700 text-white"
+    }
+  `}
               onClick={() => handlePromptClick(prompt, index)}
             >
               {prompt}
             </button>
           ))}
         </div>
-
-        <button
-          onClick={nextPrompt}
-          className="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-600"
-        >
-          <i className="fa-solid fa-chevron-right"></i>
-        </button>
       </div>
 
       {/* Input Form */}
-      {messageLimitReached ? (
+      {messageLimitReached && !hasAccess ? (
         <div className="text-center p-4 bg-red-700 text-white">
           <h2>
             You have reached your message limit. Please upgrade to continue.
           </h2>
-          {/*<ProductDisplay />*/}
-          <Button variant="primary" onClick={() => handleNavToStripe()}>
+          {/* Add your paywall here */}
+          <Button variant="primary" onClick={handlePT}>
             Upgrade Now
           </Button>
         </div>
@@ -403,8 +383,8 @@ function Chat() {
           </Button>
         </form>
       )}
-      {/* Stripe Success Screen */}
-      {success && sessionId && <SuccessDisplay sessionId={sessionId} />}
+      {/* Stripe Success Screen 
+      {success && sessionId && <SuccessDisplay sessionId={sessionId} />}*/}
     </div>
   );
 }

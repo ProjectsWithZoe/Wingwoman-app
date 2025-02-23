@@ -10,3 +10,84 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
 }
+
+.pricing-table {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.pricing-tier {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-tier h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.pricing-tier .price {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  margin: 20px 0;
+}
+
+.pricing-tier ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.pricing-tier ul li {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.subscribe-button {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.subscribe-button:hover {
+  background-color: #0056b3;
+}
+
+.close-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.close-button:hover {
+  background-color: #ff1a1a;
+}
+.carousel {
+  display: grid;
+  grid-auto-flow: column;
+  scroll-behavior: smooth;
+  gap: 1.1rem;
+  overflow-x: auto;
+  overflow-y: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}

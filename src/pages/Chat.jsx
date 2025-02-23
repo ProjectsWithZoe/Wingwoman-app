@@ -235,72 +235,23 @@ function Chat() {
   };*/
 
   return (
-    <div
-      //style={{ fontFamily: '"Poppins", sans-serif', fontSize: "20px" }}
-      className="flex flex-col h-screen bg-gray-900"
-    >
+    <div className="flex flex-col h-[100dvh] bg-gray-900 overflow-hidden">
       {/* Chat Section */}
       <header className="flex items-center justify-between p-4 border-b border-gray-800 text-white">
         <button onClick={toggleDropdown}>
           <i className="fa-solid fa-bars"></i>
         </button>
         <div className="flex items-center gap-2">
-          <img
-            src="/images/logo3.png"
-            className="mx-auto h-auto w-16 text-primary-500 text-center"
-          ></img>
-          <h1
-            className="text-xl font-bold"
-            /*style={{
-              fontFamily: '"Lavishly Yours", sans-serif',
-              fontSize: "36px",
-            }}*/
-          >
-            WingWoman
-          </h1>
+          <img src="/images/logo3.png" className="h-auto w-16" />
+          <h1 className="text-xl font-bold">WingWoman</h1>
         </div>
         <Button variant="secondary" onClick={handleSignOut}>
           <i className="fa-solid fa-right-from-bracket"></i>
         </Button>
       </header>
-      {/* Sidebar */}
-      {isDropdownOpen && (
-        <div className="flex flex-col justify absolute top-0 left-0 w-[50%] bg-gray-700 border-r border-b border-gray-900 h-[88%] rounded text-white p-4 max-h-screen w-[50%] overflow-y-auto z-20">
-          <div className="flex flex-col align-items">
-            <div className="flex flex-row justify-between">
-              <h2 className="text-lg font-bold mb-4">Previous Chats</h2>
-              <button onClick={toggleDropdown}>
-                <i className="fa-solid fa-bars"></i>
-              </button>
-            </div>
-          </div>
-
-          <div className="space-y-2 border-grey-600 rounded">
-            {conversations.map((chat) => (
-              <button
-                key={chat.id}
-                className={`w-full text-left px-4 py-2 rounded-lg ${
-                  chat.id === activeChat
-                    ? "bg-primary-500 text-white"
-                    : "bg-red-700"
-                }`}
-                onClick={() => setActiveChat(chat.id)}
-              >
-                Chat {chat.id.slice(-4)}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex flex-col justify-end">
-            <Button variant="secondary" onClick={handleSignOut}>
-              <i className="fa-solid fa-right-from-bracket"></i> Sign out
-            </Button>
-          </div>
-        </div>
-      )}
 
       {/* Messages */}
-      <div className="flex-1 overflow-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -321,34 +272,12 @@ function Chat() {
         ))}
       </div>
 
-      {/* Carousel for Prompts */}
-      <div className="flex items-center justify-center space-x-4 p-4 bg-gray-800">
-        <div className="carousel h-[100px]">
-          {promptSuggestions.map((prompt, index) => (
-            <button
-              key={index}
-              className={`p-3 w-[120px] rounded-lg text-xs transition-all 
-    ${
-      currentPromptIndex === index
-        ? "bg-primary-500 text-white"
-        : "bg-gray-700 text-white"
-    }
-  `}
-              onClick={() => handlePromptClick(prompt, index)}
-            >
-              {prompt}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Input Form */}
       {messageLimitReached && !hasAccess ? (
         <div className="text-center p-4 bg-red-700 text-white">
           <h2>
             You have reached your message limit. Please upgrade to continue.
           </h2>
-          {/* Add your paywall here */}
           <Button variant="primary" onClick={handlePT}>
             Upgrade Now
           </Button>
@@ -356,9 +285,10 @@ function Chat() {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="border-t border-gray-800 p-4 flex gap-4"
+          className="border-t border-gray-800 p-4 flex gap-4 bg-gray-900 w-full"
+          style={{ minHeight: "60px" }} // Prevents input bar from shrinking
         >
-          <button>
+          <button className="flex-shrink-0">
             <i className="fa-solid fa-lg fa-pen-to-square"></i>
           </button>
           <input
@@ -371,7 +301,7 @@ function Chat() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 flex-shrink-0"
           >
             {isLoading ? (
               <i className="fa-solid fa-spinner animate-spin"></i>
@@ -382,8 +312,6 @@ function Chat() {
           </Button>
         </form>
       )}
-      {/* Stripe Success Screen 
-      {success && sessionId && <SuccessDisplay sessionId={sessionId} />}*/}
     </div>
   );
 }

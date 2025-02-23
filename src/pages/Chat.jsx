@@ -52,8 +52,9 @@ function Chat() {
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.forEach((doc) => {
-        if (doc.exists()) {
+        if (doc.exists() && doc.data().hasAccess) {
           setHasAccess(doc.data().hasAccess);
+          navigate("/chat");
         }
       });
     });
@@ -63,7 +64,6 @@ function Chat() {
 
   useEffect(() => {
     if (hasAccess) {
-      navigate("/chat");
     }
   }, [hasAccess]);
 

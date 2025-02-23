@@ -140,7 +140,7 @@ function Chat() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/advice", {
+      const response = await fetch("/api/advice", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input }),

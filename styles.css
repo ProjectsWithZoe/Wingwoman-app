@@ -2,7 +2,7 @@
 html,
 body {
   overflow-x: hidden;
-  overflow: hidden; /* Prevent scrolling */
+
   width: 100vw;
   min-height: 100vh; /* Ensure full-screen height */
   margin: 0;

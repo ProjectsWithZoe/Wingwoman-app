@@ -239,10 +239,6 @@ function Chat() {
       //style={{ fontFamily: '"Poppins", sans-serif', fontSize: "20px" }}
       className="flex flex-col h-screen bg-gray-900"
     >
-      {/* Toggle Button (Only for Mobile) */}
-
-      {/* Sidebar */}
-
       {/* Chat Section */}
       <header className="flex items-center justify-between p-4 border-b border-gray-800 text-white">
         <button onClick={toggleDropdown}>

@@ -26,6 +26,7 @@ function Chat() {
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const [messageLimitReached, setMessageLimitReached] = useState(false); // State for message limit
   const [hasAccess, setHasAccess] = useState(false);
+  //const [success, setSuccess] = useState(false);
 
   const promptSuggestions = [
     "Why are they ghosting me?",
@@ -139,7 +140,7 @@ function Chat() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/advice", {
+      const response = await fetch("http://localhost:5000/api/advice", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input }),
@@ -224,11 +225,11 @@ function Chat() {
         "Order canceled -- continue to shop around and checkout when you're ready."
       );
     }
-  }, [sessionId]);*/
+  }, [sessionId]);
 
   const handleNavToStripe = () => {
     navigate("/stripe-pricing");
-  };
+  };*/
 
   return (
     <div
@@ -382,6 +383,8 @@ function Chat() {
           </Button>
         </form>
       )}
+      {/* Stripe Success Screen 
+      {success && sessionId && <SuccessDisplay sessionId={sessionId} />}*/}
     </div>
   );
 }

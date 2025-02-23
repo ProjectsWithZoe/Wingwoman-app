@@ -364,7 +364,7 @@ function Chat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="I need advice on..."
-            className="w-[200px] md:w-[300px] px-2 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-primary-500"
+            className="w-[230px] md:w-[300px] px-2 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-primary-500"
           />
           <Button
             type="submit"

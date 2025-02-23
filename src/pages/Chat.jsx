@@ -353,7 +353,7 @@ function Chat() {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="border-t border-gray-800 p-4 flex gap-4"
+          className="border-t border-gray-800 p-2 flex justify-between gap-4"
           style={{ minHeight: "60px" }}
         >
           <button className="flex-shrink-0">
@@ -364,7 +364,7 @@ function Chat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="I need advice on..."
-            className="flex-1 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-primary-500"
+            className="flex px-2 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-primary-500"
           />
           <Button
             type="submit"

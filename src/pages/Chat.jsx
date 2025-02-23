@@ -187,7 +187,10 @@ function Chat() {
     await auth.signOut();
     navigate("/");
   };
-
+  const handlePromptClick = (prompt, index) => {
+    setCurrentPromptIndex(index);
+    setInput(prompt);
+  };
   /*const openNewPage = () => {
     window.open("stripe/checkout.html", "_blank");
   };*/

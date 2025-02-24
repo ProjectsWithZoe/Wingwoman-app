@@ -356,7 +356,7 @@ function Chat() {
           style={{ minHeight: "60px" }}
         >
           <button className="flex-shrink-0" onClick={handleNewChat}>
-            <i className="fa-solid fa-lg fa-pen-to-square"></i>
+            <i className="fa-solid fa-lg fa-pen-to-square pl-2"></i>
           </button>
           <input
             type="text"
@@ -368,7 +368,7 @@ function Chat() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 mr-2"
           >
             {isLoading ? (
               <i className="fa-solid fa-spinner animate-spin"></i>

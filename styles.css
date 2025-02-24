@@ -1,16 +1,17 @@
 /* Prevent horizontal scrolling */
 html,
 body {
-  /*overflow: hidden; /* Prevent scrolling */
+  overflow: hidden; /* Prevent scrolling */
   width: 100vw;
   height: 100dvh; /* Fix height issues on Safari */
   margin: 0;
   padding: 0;
+  font-family: "Montserrat", sans-serif;
 }
 
 .container {
   max-width: 100vw;
-  /*overflow-x: hidden;*/
+  overflow-x: hidden;
 }
 
 .pricing-table {

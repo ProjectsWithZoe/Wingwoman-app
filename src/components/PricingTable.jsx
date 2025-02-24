@@ -7,11 +7,11 @@ export const plans = [
     price: "$5.99",
     frequency: "/week",
     features: ["Unlimited messages", "Unlimited Support"],
-    price_id: "price_1QulLs00yCNSEuua1tiC0IMQ",
+    price_id: "price_1QvpaZ00yCNSEuuaRoh6xeTs",
     isPopular: false,
     isOneTime: false,
     ctaText: "Subscribe",
-    paymentLink: "https://buy.stripe.com/7sIg2F4d3gwPeBy6oo",
+    paymentLink: "https://buy.stripe.com/bIY17LcJz6Wf3WUcMP",
     testPaymentLink: "https://buy.stripe.com/test_3cseXngREcaVeUoeUX",
   },
   {
@@ -19,30 +19,28 @@ export const plans = [
     price: "$9.99",
     frequency: "/month",
     features: ["Unlimited messages", "Unlimited Support"],
-    price_id: "price_1QulMQ00yCNSEuuae1g8pm8g",
+    price_id: "price_1Qvpkz00yCNSEuuaFPLyP41m",
     isPopular: true,
     isOneTime: false,
     ctaText: "Subscribe",
-    paymentLink: "https://buy.stripe.com/3csaIl6lb6Wf1OM3cd",
+    paymentLink: "https://buy.stripe.com/6oE4jXaBra8r3WUaEI",
     testPaymentLink: "https://buy.stripe.com/test_cN28yZ8l8fn7dQk6os",
   },
   {
-    title: "Annually",
+    title: "Yearly",
     price: "$49.99",
     frequency: "/year",
     features: ["Unlimited messages", "Unlimited Support"],
-    price_id: "price_1QulND00yCNSEuuasdT21rVs",
+    price_id: "price_1Qvplf00yCNSEuuatdPp72GR",
     isPopular: false,
-    isOneTime: true,
-    ctaText: "Get it now",
-    paymentLink: "https://buy.stripe.com/5kA8Ad9xnfsLbpm6oq",
+    isOneTime: false,
+    ctaText: "Subscribe",
+    paymentLink: "https://buy.stripe.com/aEUbMpfVL6Wfali3ch",
     testPaymentLink: "https://buy.stripe.com/test_bIYeXnfNA1whbIccMR",
   },
 ];
 
 const PricingTable = () => {
-  const [plan, setPlan] = useState(plans[0]);
-
   return (
     <div>
       <div style={styles.container}>
@@ -71,7 +69,7 @@ const PricingTable = () => {
               <a
                 target="_blank"
                 href={
-                  plan.testPaymentLink +
+                  plan.paymentLink +
                   "?prefilled_email=" +
                   auth.currentUser.email
                 }

@@ -156,7 +156,25 @@ export function Login() {
               Sign up
             </Button>
           </div>
+          <div className="text-xs flex justify-end text-red-500">
+            Forgotten Password?
+          </div>
         </form>
+        <div>
+          <div className="flex flex-row justify-between text-xs text-gray-500">
+            <a href="/privacy-policy.html" target="_blank">
+              <div>Privacy Policy</div>
+            </a>
+            <a href="/terms-and-conditions.html" target="_blank">
+              <div>Terms and Conditions</div>
+            </a>
+          </div>
+          <a href="/contact">
+            <div className="flex flex-row justify-start text-xs text-gray-500">
+              Contact Us
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   );

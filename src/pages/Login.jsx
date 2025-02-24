@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   getAuth,
@@ -162,18 +162,19 @@ export function Login() {
         </form>
         <div>
           <div className="flex flex-row justify-between text-xs text-gray-500">
-            <a href="/privacy-policy.html" target="_blank">
-              <div>Privacy Policy</div>
-            </a>
-            <a href="/terms-and-conditions.html" target="_blank">
-              <div>Terms and Conditions</div>
-            </a>
+            <Link to="/privacy-policy" target="_blank">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-and-conditions" target="_blank">
+              Terms and Conditions
+            </Link>
           </div>
-          <a href="/contact">
-            <div className="flex flex-row justify-start text-xs text-gray-500">
+
+          <div className="flex flex-row justify-start text-xs text-gray-500">
+            <Link to="/contact" target="_blank">
               Contact Us
-            </div>
-          </a>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

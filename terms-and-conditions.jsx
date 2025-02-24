@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Terms and conditions</title>
-  </head>
-  <body>
-    <section>
+import React from "react";
+
+const Termsandonditions = () => {
+  return (
+    <div>
+      <h1>Terms and conditions</h1>
       <div>
         <h2>1. Acceptance of Terms</h2>
         <p>
@@ -86,6 +85,8 @@
           contact us at admin@wingwoman.site..
         </p>
       </div>
-    </section>
-  </body>
-</html>
+    </div>
+  );
+};
+
+export default Termsandonditions;

@@ -97,4 +97,6 @@ body {
 
 .policy {
   overflow: auto !important;
+  padding: 20px !important;
+  margin: 20px !important;
 }

@@ -9,6 +9,10 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+body.policy-open {
+  overflow: hidden;
+}
+
 .container {
   max-width: 100vw;
   overflow-x: hidden;
@@ -99,5 +103,6 @@ body {
   overflow: auto !important;
   padding: 20px !important;
   margin: 20px !important;
-  overflow: auto !important;
+  max-height: 100vh; /* Adjust as needed */
+  overflow-y: auto;
 }

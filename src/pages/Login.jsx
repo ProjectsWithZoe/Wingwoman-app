@@ -126,7 +126,7 @@ export function Login() {
             </div>
           )}
 
-          <Input
+          <input
             label="Email address"
             type="email"
             required
@@ -134,7 +134,7 @@ export function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <Input
+          <input
             label="Password"
             type="password"
             required

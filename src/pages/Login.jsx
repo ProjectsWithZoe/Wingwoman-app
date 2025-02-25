@@ -171,16 +171,16 @@ export function Login() {
         </form>
         <div>
           <div className="flex flex-row justify-between text-xs text-gray-500">
-            <Link to="public/pages/privacy-policy" target="_blank">
+            <Link to="/privacy-policy" target="_blank">
               Privacy Policy
             </Link>
-            <Link to="public/pages/terms-and-conditions" target="_blank">
+            <Link to="/terms-and-conditions" target="_blank">
               Terms and Conditions
             </Link>
           </div>
 
           <div className="flex flex-row justify-start text-xs text-gray-500">
-            <Link to="public/pages/contact" target="_blank">
+            <Link to="/contact" target="_blank">
               Contact Us
             </Link>
           </div>

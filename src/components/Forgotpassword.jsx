@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { sendPasswordResetEmail, getAuth } from "firebase/auth";
+import { Button } from "./Button";
+import { Input } from "./Input.tsx";
 
 export function ForgotPassword() {
   const [email, setEmail] = useState("");

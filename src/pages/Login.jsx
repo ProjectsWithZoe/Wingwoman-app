@@ -127,6 +127,9 @@ export function Login() {
           )}
 
           <input
+            className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700',
+          'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
+          'placeholder-gray-500"
             label="Email address"
             type="email"
             required
@@ -135,6 +138,9 @@ export function Login() {
           />
 
           <input
+            className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700',
+          'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
+          'placeholder-gray-500"
             label="Password"
             type="password"
             required
@@ -148,8 +154,8 @@ export function Login() {
             </button>
             <button
               type="button"
+              className="px-4 py-2 flex-1 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
               variant="secondary"
-              className="flex-1"
               onClick={handleSignUp}
               disabled={isLoading}
             >

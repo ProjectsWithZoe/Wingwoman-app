@@ -255,7 +255,11 @@ function Chat() {
             WingWoman
           </h1>
         </div>
-        <Button variant="secondary" onClick={handleSignOut}>
+        <Button
+          variant="secondary"
+          className="px-4 py-2 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
+          onClick={handleSignOut}
+        >
           <i className="fa-solid fa-right-from-bracket"></i>
         </Button>
       </header>
@@ -288,7 +292,11 @@ function Chat() {
           </div>
 
           <div className="flex flex-col justify-end">
-            <Button variant="secondary" onClick={handleSignOut}>
+            <Button
+              variant="secondary"
+              onClick={handleSignOut}
+              className="px-4 py-2 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
+            >
               <i className="fa-solid fa-right-from-bracket"></i> Sign out
             </Button>
           </div>
@@ -345,9 +353,13 @@ function Chat() {
             You have reached your message limit. Please upgrade to continue.
           </h2>
           {/* Add your paywall here */}
-          <Button variant="primary" onClick={handlePT}>
+          <button
+            variant="primary"
+            onClick={handlePT}
+            className="px-4 py-2 rounded-lg font-medium transition-colors bg-primary-600 hover:bg-primary-700 text-white"
+          >
             Upgrade Now
-          </Button>
+          </button>
         </div>
       ) : (
         <form

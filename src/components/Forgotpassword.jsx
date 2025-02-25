@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { sendPasswordResetEmail, getAuth } from "firebase/auth";
-import { Button } from "./Button";
+//import { Button } from "./Button";
 
 export function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -41,9 +41,9 @@ export function ForgotPassword() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <Button type="submit" disabled={isLoading}>
+          <button type="submit" disabled={isLoading}>
             Send Reset Email
-          </Button>
+          </button>
         </form>
       </div>
     </div>

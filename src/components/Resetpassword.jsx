@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { confirmPasswordReset, getAuth } from "firebase/auth";
-import { Button } from "./Button";
+//import { Button } from "./Button";
 
 export function ResetPassword() {
   const [searchParams] = useSearchParams();
@@ -46,9 +46,9 @@ export function ResetPassword() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button type="submit" disabled={isLoading}>
+          <button type="submit" disabled={isLoading}>
             Reset Password
-          </Button>
+          </button>
         </form>
       </div>
     </div>

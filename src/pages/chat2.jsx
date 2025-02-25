@@ -12,7 +12,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
-import { Button } from "../components/Button";
+//import { Button } from "../components/Button";
 
 function Chat() {
   const navigate = useNavigate();
@@ -256,9 +256,9 @@ function Chat() {
             WingWoman
           </h1>
         </div>
-        <Button variant="secondary" onClick={handleSignOut}>
+        <button variant="secondary" onClick={handleSignOut}>
           <i className="fa-solid fa-right-from-bracket"></i>
-        </Button>
+        </button>
       </header>
       {/* Sidebar */}
       {isDropdownOpen && (
@@ -289,9 +289,9 @@ function Chat() {
           </div>
 
           <div className="flex flex-col justify-end">
-            <Button variant="secondary" onClick={handleSignOut}>
+            <button variant="secondary" onClick={handleSignOut}>
               <i className="fa-solid fa-right-from-bracket"></i> Sign out
-            </Button>
+            </button>
           </div>
         </div>
       )}
@@ -346,9 +346,9 @@ function Chat() {
             You have reached your message limit. Please upgrade to continue.
           </h2>
           {/* Add your paywall here */}
-          <Button variant="primary" onClick={handlePT}>
+          <button variant="primary" onClick={handlePT}>
             Upgrade Now
-          </Button>
+          </button>
         </div>
       ) : (
         <form
@@ -366,7 +366,7 @@ function Chat() {
             placeholder="I need advice on..."
             className="w-[230px] md:w-[300px] px-2 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-primary-500"
           />
-          <Button
+          <button
             type="submit"
             disabled={isLoading}
             className="flex items-center gap-2"
@@ -377,7 +377,7 @@ function Chat() {
               <i className="fa-solid fa-arrow-right"></i>
             )}
             Send
-          </Button>
+          </button>
         </form>
       )}
       {/* Stripe Success Screen 

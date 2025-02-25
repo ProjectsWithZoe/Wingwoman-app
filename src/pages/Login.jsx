@@ -143,10 +143,10 @@ export function Login() {
           />
 
           <div className="flex gap-4">
-            <Button type="submit" className="flex-1" disabled={isLoading}>
+            <button type="submit" className="flex-1" disabled={isLoading}>
               Sign in
-            </Button>
-            <Button
+            </button>
+            <button
               type="button"
               variant="secondary"
               className="flex-1"
@@ -154,7 +154,7 @@ export function Login() {
               disabled={isLoading}
             >
               Sign up
-            </Button>
+            </button>
           </div>
           <Link
             className="text-xs flex justify-end text-red-500"

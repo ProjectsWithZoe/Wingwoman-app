@@ -6,10 +6,10 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  confirmPasswordReset,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
-import { Button } from "../components/Button";
-import { Input } from "../components/Input";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
@@ -156,9 +156,12 @@ export function Login() {
               Sign up
             </Button>
           </div>
-          <div className="text-xs flex justify-end text-red-500">
+          <Link
+            className="text-xs flex justify-end text-red-500"
+            to="forgot-password"
+          >
             Forgotten Password?
-          </div>
+          </Link>
         </form>
         <div>
           <div className="flex flex-row justify-between text-xs text-gray-500">

@@ -99,4 +99,5 @@ body {
   overflow: auto !important;
   padding: 20px !important;
   margin: 20px !important;
+  overflow-y: auto !important;
 }

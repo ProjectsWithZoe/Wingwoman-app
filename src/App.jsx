@@ -5,6 +5,8 @@ import PricingTable from "./components/PricingTable";
 import Contact from "../public/pages/Contact";
 import PrivacyPolicy from "../public/pages/Privacy-policy";
 import Termsandonditions from "../public/pages/terms-and-conditions";
+import { ForgotPassword } from "./components/Forgotpassword";
+import { ResetPassword } from "./components/Resetpassword";
 
 function App() {
   return (

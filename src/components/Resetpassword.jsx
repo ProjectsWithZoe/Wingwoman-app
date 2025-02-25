@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { confirmPasswordReset, getAuth } from "firebase/auth";
 import { Button } from "./Button";
-import { Input } from "./Input.tsx";
 
 export function ResetPassword() {
   const [searchParams] = useSearchParams();
@@ -40,7 +39,7 @@ export function ResetPassword() {
         )}
         {error && <div className="p-4 bg-red-500 text-white">{error}</div>}
         <form onSubmit={handleResetPassword} className="space-y-6">
-          <Input
+          <input
             label="Enter new password"
             type="password"
             required

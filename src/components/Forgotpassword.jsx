@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { sendPasswordResetEmail, getAuth } from "firebase/auth";
 import { Button } from "./Button";
-import { Input } from "./Input.tsx";
 
 export function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -35,7 +34,7 @@ export function ForgotPassword() {
         )}
         {error && <div className="p-4 bg-red-500 text-white">{error}</div>}
         <form onSubmit={handleResetPassword} className="space-y-6">
-          <Input
+          <input
             label="Enter your email"
             type="email"
             required

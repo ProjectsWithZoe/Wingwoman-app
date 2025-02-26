@@ -25,6 +25,7 @@ function Chat() {
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const [messageLimitReached, setMessageLimitReached] = useState(false); // State for message limit
   const [hasAccess, setHasAccess] = useState(false);
+  const [isSettingsOpen, setSettingsOpen] = useState(false);
   //const [success, setSuccess] = useState(false);
 
   const promptSuggestions = [
@@ -40,6 +41,11 @@ function Chat() {
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
+    console.log("clicked");
+  };
+
+  const toggleSettings = () => {
+    setSettingsOpen((prev) => !prev);
     console.log("clicked");
   };
 
@@ -258,9 +264,9 @@ function Chat() {
         <Button
           variant="secondary"
           className="px-4 py-2 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
-          onClick={handleSignOut}
+          onClick={toggleSettings}
         >
-          <i className="fa-solid fa-right-from-bracket"></i>
+          <i className="fa-solid fa-gear"></i>
         </Button>
       </header>
       {/* Sidebar */}
@@ -290,8 +296,32 @@ function Chat() {
               </button>
             ))}
           </div>
+        </div>
+      )}
+
+      {/*SETTINGS TOGGLE */}
+      {isSettingsOpen && (
+        <div className="flex flex-col justify absolute top-0 right-0 w-[50%] bg-gray-700 border-r border-b border-gray-900 h-[30%] rounded text-white p-4 max-h-screen w-[50%] overflow-y-auto z-20">
+          <div className="flex flex-col align-items">
+            <div className="flex flex-row justify-between">
+              <h2 className="text-lg font-bold mb-4">Settings</h2>
+              <button onClick={toggleSettings}>
+                <i className="fa-solid fa-gear"></i>
+              </button>
+            </div>
+          </div>
 
           <div className="flex flex-col justify-end">
+            <div className="text-xs md:text-m overflow-hidden">
+              {auth.currentUser.email}
+            </div>
+            <a
+              href="https://billing.stripe.com/p/login/8wM4gv1Eof8H8BWdQR"
+              variant="secondary"
+              className="p-2 mb-2 mt-2 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
+            >
+              <i className="fa-solid fa-user"></i> Membership
+            </a>
             <Button
               variant="secondary"
               onClick={handleSignOut}

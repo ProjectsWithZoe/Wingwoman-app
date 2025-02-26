@@ -149,7 +149,11 @@ export function Login() {
           />
 
           <div className="flex gap-4">
-            <button type="submit" className="flex-1" disabled={isLoading}>
+            <button
+              type="submit"
+              className="px-4 py-2 flex-1 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
+              disabled={isLoading}
+            >
               Sign in
             </button>
             <button

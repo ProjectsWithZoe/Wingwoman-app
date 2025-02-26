@@ -41,12 +41,10 @@ function Chat() {
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
-    console.log("clicked");
   };
 
   const toggleSettings = () => {
     setSettingsOpen((prev) => !prev);
-    console.log("clicked");
   };
 
   useEffect(() => {
@@ -84,7 +82,6 @@ function Chat() {
 
   useEffect(() => {
     if (!isAuthenticated || !auth.currentUser) return;
-    console.log(auth.currentUser.email);
 
     const q = query(
       collection(db, "conversations"),
@@ -160,7 +157,7 @@ function Chat() {
           created_at: serverTimestamp(),
         });
         chatId = newChatRef.id;
-        console.log(chatId);
+        //console.log(chatId);
         setActiveChat(chatId);
       }
 
@@ -182,7 +179,7 @@ function Chat() {
 
       setInput("");
     } catch (error) {
-      console.error("Error:", error);
+      //console.error("Error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -421,8 +418,6 @@ function Chat() {
           </Button>
         </form>
       )}
-      {/* Stripe Success Screen 
-      {success && sessionId && <SuccessDisplay sessionId={sessionId} />}*/}
     </div>
   );
 }

@@ -7,6 +7,7 @@ import PrivacyPolicy from "../public/pages/Privacy-policy";
 import Termsandonditions from "../public/pages/terms-and-conditions";
 import { ForgotPassword } from "./components/Forgotpassword";
 import { ResetPassword } from "./components/Resetpassword";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }

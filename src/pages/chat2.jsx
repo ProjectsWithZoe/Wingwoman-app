@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSwipeable } from "react-swipeable";
 
 import {
   collection,
@@ -11,7 +12,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
-import { Button } from "../components/Button";
+//import { Button } from "../components/Button";
 
 function Chat() {
   const navigate = useNavigate();
@@ -25,7 +26,6 @@ function Chat() {
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const [messageLimitReached, setMessageLimitReached] = useState(false); // State for message limit
   const [hasAccess, setHasAccess] = useState(false);
-  const [isSettingsOpen, setSettingsOpen] = useState(false);
   //const [success, setSuccess] = useState(false);
 
   const promptSuggestions = [
@@ -41,10 +41,7 @@ function Chat() {
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
-  };
-
-  const toggleSettings = () => {
-    setSettingsOpen((prev) => !prev);
+    console.log("clicked");
   };
 
   useEffect(() => {
@@ -82,6 +79,7 @@ function Chat() {
 
   useEffect(() => {
     if (!isAuthenticated || !auth.currentUser) return;
+    console.log(auth.currentUser.email);
 
     const q = query(
       collection(db, "conversations"),
@@ -142,7 +140,7 @@ function Chat() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/advice", {
+      const response = await fetch("http://localhost:5000/api/advice", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input }),
@@ -157,7 +155,7 @@ function Chat() {
           created_at: serverTimestamp(),
         });
         chatId = newChatRef.id;
-        //console.log(chatId);
+        console.log(chatId);
         setActiveChat(chatId);
       }
 
@@ -179,7 +177,7 @@ function Chat() {
 
       setInput("");
     } catch (error) {
-      //console.error("Error:", error);
+      console.error("Error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -206,7 +204,7 @@ function Chat() {
     // Clear the input and set activeChat to null
     setInput("");
     setActiveChat(null);
-    // create a new conversation here
+    // Optionally, you can also create a new conversation here
     const newChatRef = await addDoc(collection(db, "conversations"), {
       userId: auth.currentUser.uid,
       created_at: serverTimestamp(),
@@ -258,13 +256,9 @@ function Chat() {
             WingWoman
           </h1>
         </div>
-        <Button
-          variant="secondary"
-          className="px-4 py-2 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
-          onClick={toggleSettings}
-        >
-          <i className="fa-solid fa-gear"></i>
-        </Button>
+        <button variant="secondary" onClick={handleSignOut}>
+          <i className="fa-solid fa-right-from-bracket"></i>
+        </button>
       </header>
       {/* Sidebar */}
       {isDropdownOpen && (
@@ -293,39 +287,11 @@ function Chat() {
               </button>
             ))}
           </div>
-        </div>
-      )}
-
-      {/*SETTINGS TOGGLE */}
-      {isSettingsOpen && (
-        <div className="flex flex-col justify absolute top-0 right-0 w-[50%] bg-gray-700 border-r border-b border-gray-900 h-[30%] rounded text-white p-4 max-h-screen w-[50%] overflow-y-auto z-20">
-          <div className="flex flex-col align-items">
-            <div className="flex flex-row justify-between">
-              <h2 className="text-lg font-bold mb-4">Settings</h2>
-              <button onClick={toggleSettings}>
-                <i className="fa-solid fa-gear"></i>
-              </button>
-            </div>
-          </div>
 
           <div className="flex flex-col justify-end">
-            <div className="text-xs md:text-m overflow-hidden">
-              {auth.currentUser.email}
-            </div>
-            <a
-              href="https://billing.stripe.com/p/login/8wM4gv1Eof8H8BWdQR"
-              variant="secondary"
-              className="p-2 mb-2 mt-2 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
-            >
-              <i className="fa-solid fa-user"></i> Membership
-            </a>
-            <Button
-              variant="secondary"
-              onClick={handleSignOut}
-              className="px-4 py-2 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
-            >
+            <button variant="secondary" onClick={handleSignOut}>
               <i className="fa-solid fa-right-from-bracket"></i> Sign out
-            </Button>
+            </button>
           </div>
         </div>
       )}
@@ -380,11 +346,7 @@ function Chat() {
             You have reached your message limit. Please upgrade to continue.
           </h2>
           {/* Add your paywall here */}
-          <button
-            variant="primary"
-            onClick={handlePT}
-            className="px-4 py-2 rounded-lg font-medium transition-colors bg-primary-600 hover:bg-primary-700 text-white"
-          >
+          <button variant="primary" onClick={handlePT}>
             Upgrade Now
           </button>
         </div>
@@ -394,8 +356,8 @@ function Chat() {
           className="border-t border-gray-800 py-2 justify-between flex gap-2"
           style={{ minHeight: "60px" }}
         >
-          <button className="flex-shrink-0" onClick={handleNewChat}>
-            <i className="fa-solid fa-lg fa-pen-to-square pl-2"></i>
+          <button className="flex-shrink-0">
+            <i className="fa-solid fa-lg fa-pen-to-square"></i>
           </button>
           <input
             type="text"
@@ -404,10 +366,10 @@ function Chat() {
             placeholder="I need advice on..."
             className="w-[230px] md:w-[300px] px-2 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-primary-500"
           />
-          <Button
+          <button
             type="submit"
             disabled={isLoading}
-            className="flex items-center gap-2 mr-2"
+            className="flex items-center gap-2"
           >
             {isLoading ? (
               <i className="fa-solid fa-spinner animate-spin"></i>
@@ -415,9 +377,11 @@ function Chat() {
               <i className="fa-solid fa-arrow-right"></i>
             )}
             Send
-          </Button>
+          </button>
         </form>
       )}
+      {/* Stripe Success Screen 
+      {success && sessionId && <SuccessDisplay sessionId={sessionId} />}*/}
     </div>
   );
 }

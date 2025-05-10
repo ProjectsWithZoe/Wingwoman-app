@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script
-      src="https://kit.fontawesome.com/ad9e6b6156.js"
-      crossorigin="anonymous"
-    ></script>
-    <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="styles.css" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&display=swap"
       rel="stylesheet"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Montserrat:ital@0;1&display=swap"
-      rel="stylesheet"
-    />
-
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
+    <meta
+      name="description"
+      content="WingWoman helps you navigate social situations with confidence. Get expert advice, dating tips, and personal support for making meaningful connections."
+    />
+    <meta
+      name="keywords"
+      content="WingWoman, dating tips, social support, relationships, confidence, networking"
+    />
+    <meta name="author" content="WingWoman Team" />
 
-    <title>WingWoman</title>
+    <title>WingWoman - Your Ultimate Social Companion</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="public/images/favicon.png" />
   </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-X91X14GG8F"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-X91X14GG8F");
+  </script>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script
+      src="https://kit.fontawesome.com/ad9e6b6156.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

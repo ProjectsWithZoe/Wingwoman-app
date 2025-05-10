@@ -1,15 +1,17 @@
-import { FormEvent, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  confirmPasswordReset,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
-import { Button } from "../components/Button";
-import { Input } from "../components/Input";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 export function Login() {
   const navigate = useNavigate();
@@ -18,10 +20,10 @@ export function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const firebaseAuth = getAuth(); // Correctly initialize auth
+  const auth = getAuth(); // Correctly initialize auth
 
   useEffect(() => {
-    const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user && user.emailVerified) {
         navigate("/chat");
       }
@@ -37,7 +39,7 @@ export function Login() {
 
     try {
       const userCredential = await signInWithEmailAndPassword(
-        firebaseAuth,
+        auth,
         email,
         password
       );
@@ -64,7 +66,7 @@ export function Login() {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
-        firebaseAuth,
+        auth,
         email,
         password
       );
@@ -72,8 +74,12 @@ export function Login() {
 
       await sendEmailVerification(user);
       setSuccess(true);
-
       setIsLoading(false);
+      await addDoc(collection(db, "users"), {
+        userId: auth.currentUser.uid,
+        email: user.email,
+        hasAccess: false,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
       setIsLoading(false);
@@ -120,7 +126,10 @@ export function Login() {
             </div>
           )}
 
-          <Input
+          <input
+            className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700',
+          'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
+          'placeholder-gray-500"
             label="Email address"
             type="email"
             required
@@ -128,7 +137,10 @@ export function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <Input
+          <input
+            className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700',
+          'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
+          'placeholder-gray-500"
             label="Password"
             type="password"
             required
@@ -137,20 +149,46 @@ export function Login() {
           />
 
           <div className="flex gap-4">
-            <Button type="submit" className="flex-1" disabled={isLoading}>
+            <button
+              type="submit"
+              className="px-4 py-2 flex-1 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
+              disabled={isLoading}
+            >
               Sign in
-            </Button>
-            <Button
+            </button>
+            <button
               type="button"
+              className="px-4 py-2 flex-1 rounded-lg font-medium transition-colors bg-gray-800 hover:bg-gray-700 text-gray-100"
               variant="secondary"
-              className="flex-1"
               onClick={handleSignUp}
               disabled={isLoading}
             >
               Sign up
-            </Button>
+            </button>
           </div>
+          <Link
+            className="text-xs flex justify-end text-red-500"
+            to="forgot-password"
+          >
+            Forgotten Password?
+          </Link>
         </form>
+        <div>
+          <div className="flex flex-row justify-between text-xs text-gray-500">
+            <Link to="/privacy-policy" target="_blank">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-and-conditions" target="_blank">
+              Terms and Conditions
+            </Link>
+          </div>
+
+          <div className="flex flex-row justify-start text-xs text-gray-500">
+            <Link to="/contact" target="_blank">
+              Contact Us
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
